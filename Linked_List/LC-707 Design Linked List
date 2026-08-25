@@ -1,0 +1,77 @@
+class Node:
+    def __init__(self,val=0,next=None):
+        self.val=val
+        self.next=next
+class MyLinkedList:
+
+    def __init__(self,val=0,next=None):
+        self.head=None
+        self.size=0
+
+    def get(self, index: int) -> int:
+        if index >= self.size:  
+            return -1
+        c=0
+        cur=self.head
+        while cur:
+            if index==c:
+                return cur.val
+            c+=1
+
+            cur=cur.next
+        return -1
+
+
+    def addAtHead(self, val: int) -> None:
+       new=Node(val)
+       new.next=self.head
+       self.head=new
+       self.size+=1
+
+
+    def addAtTail(self, val: int) -> None:
+        new=Node(val)
+        cur=self.head
+        if self.head is None:
+            self.head = new
+            self.size += 1
+            return
+        while cur.next:
+            cur=cur.next
+
+        cur.next=new
+        self.size+=1        
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index < 0 or index > self.size:
+            return
+
+        if index == 0:
+            self.addAtHead(val)
+            return
+
+        if index == self.size:
+            self.addAtTail(val)
+            return
+        cur=self.head
+        new=Node(val)
+        for _ in range(index-1):
+            cur=cur.next
+        new.next=cur.next
+        cur.next=new
+        self.size+=1
+
+        
+
+    def deleteAtIndex(self, index: int) -> None:
+        if index < 0 or index >= self.size:
+            return
+        if index==0:
+            self.head=self.head.next
+            self.size-=1
+            return
+        cur=self.head
+        for _ in range(index-1):
+            cur=cur.next
+        cur.next=cur.next.next
+        self.size-=1
